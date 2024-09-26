@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           reject('El mensaje no puede estar vacío');
         }
-      }, 3000);
+      }, 1500);
     });
   }
 
@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch((error) => {
         console.error(error);
+        alert(error)
       });
   });
 });
