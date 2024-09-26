@@ -8,28 +8,45 @@ function greet(name: string): void {
 
 greet("World");
 
-// Lógica para el input y el botón
-const inputElement = document.getElementById('messageInput') as HTMLInputElement;
-const buttonElement = document.getElementById('submitButton');
-const cardContainer = document.getElementById('cardContainer');
 
-if (buttonElement && inputElement && cardContainer) {
-  buttonElement.addEventListener('click', () => {
-    const message = inputElement.value?.toString().trim();
-    if (message) {
-      // Crear una carta con el mensaje
-      const card = document.createElement('ion-card');
-      const cardContent = document.createElement('ion-card-content');
-      cardContent.textContent = message;
-      card.appendChild(cardContent);
+document.addEventListener('DOMContentLoaded', () => {
 
-      // Añadir la carta al contenedor
-      cardContainer.appendChild(card);
+  const submitButton = document.getElementById('submitButton') as HTMLButtonElement;
+  const messageInput = document.getElementById('messageInput') as HTMLInputElement;
+  const cardContainer = document.getElementById('cardContainer');
 
-      // Limpiar el input después de enviar
-      inputElement.value = '';
-    }
+ 
+  function enviarMensaje(mensaje: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+
+      setTimeout(() => {
+        if (mensaje.trim()) {
+          resolve(`${mensaje}`);
+        } else {
+          reject('El mensaje no puede estar vacío');
+        }
+      }, 3000);
+    });
+  }
+
+  submitButton.addEventListener('click', () => {
+
+    const mensaje = messageInput.value as string;
+
+    
+    enviarMensaje(mensaje)
+      .then((respuesta) => {
+    
+        const newCard = document.createElement('ion-card');
+        newCard.innerHTML = `<ion-card-content>${respuesta}</ion-card-content>`;
+        cardContainer?.appendChild(newCard);
+
+        messageInput.value = '';
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
-}
+});
 
 
